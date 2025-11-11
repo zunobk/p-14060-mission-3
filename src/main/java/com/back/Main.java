@@ -13,6 +13,7 @@ public class Main {
         Scanner scanner = new Scanner(input);
 
         String cmd = scanner.nextLine();
+        String content = scanner.nextLine();
 
         System.out.println(cmd);
     }
