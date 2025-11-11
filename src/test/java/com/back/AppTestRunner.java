@@ -1,5 +1,6 @@
 package com.back;
 
+import com.back.domain.wiseSaying.service.WiseSayingService;
 import com.back.standard.util.TestUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -11,7 +12,8 @@ public class AppTestRunner {
         Scanner scanner = TestUtil.genScanner(input + "\n종료");
 
         ByteArrayOutputStream output = TestUtil.setOutToByteArray();
-        AppContext.scanner = scanner;
+
+        AppContext.renew(scanner);
         new App().run();
 
         return output.toString();
