@@ -35,4 +35,15 @@ public class WiseSayingService {
 
         return true;
     }
+
+    public WiseSaying findById(int id) {
+        return wiseSayingRepository.findById(id);
+    }
+
+    public void modify(WiseSaying wiseSaying, String content, String author) {
+        wiseSaying.setContent(content);
+        wiseSaying.setAuthor(author);
+
+        wiseSayingRepository.save(wiseSaying);
+    }
 }
