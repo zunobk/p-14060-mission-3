@@ -1,0 +1,1 @@
+rootProject.name = "TDD-wise-Saying-2025-11-11"
