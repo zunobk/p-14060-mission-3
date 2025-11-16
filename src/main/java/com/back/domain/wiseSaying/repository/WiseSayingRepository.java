@@ -24,6 +24,7 @@ public class WiseSayingRepository {
         return wiseSayings
                 .reversed()
                 .stream()
+                .skip((pageNo - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
@@ -55,6 +56,7 @@ public class WiseSayingRepository {
                 .filter(
                         w -> w.getContent().contains(keyword)
                 )
+                .skip((pageNo - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
@@ -66,6 +68,7 @@ public class WiseSayingRepository {
                 .filter(
                         w -> w.getAuthor().contains(keyword)
                 )
+                .skip((pageNo - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
@@ -73,6 +76,7 @@ public class WiseSayingRepository {
     public List<WiseSaying> findForListByContentContainingOrAuthorContaining(String keyword1, String keyword2, int pageSize, int pageNo) {
         return wiseSayings.stream()
                 .filter(w -> w.getContent().contains(keyword1) || w.getAuthor().contains(keyword2))
+                .skip((pageNo - 1) * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList())
                 .reversed();
