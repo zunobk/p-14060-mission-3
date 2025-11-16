@@ -75,11 +75,12 @@ public class WiseSayingRepository {
 
     public List<WiseSaying> findForListByContentContainingOrAuthorContaining(String keyword1, String keyword2, int pageSize, int pageNo) {
         return wiseSayings.stream()
+                .reversed()
                 .filter(w -> w.getContent().contains(keyword1) || w.getAuthor().contains(keyword2))
                 .skip((pageNo - 1) * pageSize)
                 .limit(pageSize)
-                .collect(Collectors.toList())
-                .reversed();
+                .collect(Collectors.toList());
+
 
     }
 }
