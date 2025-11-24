@@ -4,12 +4,10 @@ import com.back.AppContext;
 import com.back.domain.wiseSaying.entity.WiseSaying;
 import com.back.domain.wiseSaying.service.WiseSayingService;
 import com.back.global.rq.Rq;
+import com.back.standard.dto.Page;
 import com.back.standard.dto.Pageable;
 
-import java.util.Arrays;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class WiseSayingController {
     private final Scanner scanner;
@@ -44,13 +42,16 @@ public class WiseSayingController {
         String keywordType = rq.getParam("keywordType", "all");
         String keyword =  rq.getParam("keyword", "");
 
-        for (WiseSaying wiseSaying : wiseSayingService.findForList(keywordType, keyword, pageable)) {
+        Page<WiseSaying> wiseSayingPage = wiseSayingService.findForList(keywordType, keyword, pageable);
+
+        for (WiseSaying wiseSaying : wiseSayingPage.getContent()) {
             System.out.printf("%d / %s / %s\n", wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent());
         }
     }
 
     public void actionDelete(Rq rq) {
         int id = rq.getParamAsInt("id", -1);
+
         if (id == -1) {
             System.out.println("id를 정확히 입력해주세요.");
             return;
