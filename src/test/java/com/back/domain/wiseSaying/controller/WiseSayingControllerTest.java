@@ -94,7 +94,6 @@ public class WiseSayingControllerTest {
                 .doesNotContain("1 / 작자미상 / 현재를 사랑하라.");
     }
 
-
     @Test
     @DisplayName("`삭제?id=1`를 2번 시도했을 때의 예외처리")
     void t6() {
@@ -151,7 +150,6 @@ public class WiseSayingControllerTest {
                 .doesNotContain("1 / 작자미상 / 현재를 사랑하라.");
     }
 
-
     @Test
     @DisplayName("목록?keywordType=author&keyword=작자")
     void t9() {
@@ -188,14 +186,12 @@ public class WiseSayingControllerTest {
                 .contains("2 / 넬슨제독 / 진정한 해전의 왕은 이순신 뿐이다.");
     }
 
-
     private String makeSampleDataCommand() {
         return IntStream
                 .rangeClosed(1, 10)
                 .mapToObj(id -> "등록\n명언 %d\n작자미상 %d".formatted(id, id))
                 .collect(Collectors.joining("\n"));
     }
-
 
     @Test
     @DisplayName("목록 : 한 페이지에 최대 5개만 노출된다.")
@@ -214,7 +210,8 @@ public class WiseSayingControllerTest {
                 .doesNotContain("4 / 작자미상 4 / 명언 4")
                 .doesNotContain("3 / 작자미상 3 / 명언 3")
                 .doesNotContain("2 / 작자미상 2 / 명언 2")
-                .doesNotContain("1 / 작자미상 1 / 명언 1");
+                .doesNotContain("1 / 작자미상 1 / 명언 1")
+                .contains("페이지 : [1] / 2");
     }
 
     @Test
@@ -234,15 +231,15 @@ public class WiseSayingControllerTest {
                 .contains("4 / 작자미상 4 / 명언 4")
                 .contains("3 / 작자미상 3 / 명언 3")
                 .contains("2 / 작자미상 2 / 명언 2")
-                .contains("1 / 작자미상 1 / 명언 1");
+                .contains("1 / 작자미상 1 / 명언 1")
+                .contains("페이지 : 1 / [2]");
     }
-
 
     @Test
     @DisplayName("목록?keyword=명언")
     void t13() {
         String rs = AppTestRunner.run(
-                makeSampleDataCommand() + "\n목록"
+                makeSampleDataCommand() + "\n목록?keyword=명언"
         );
 
         assertThat(rs)
@@ -255,7 +252,9 @@ public class WiseSayingControllerTest {
                 .doesNotContain("4 / 작자미상 4 / 명언 4")
                 .doesNotContain("3 / 작자미상 3 / 명언 3")
                 .doesNotContain("2 / 작자미상 2 / 명언 2")
-                .doesNotContain("1 / 작자미상 1 / 명언 1");
+                .doesNotContain("1 / 작자미상 1 / 명언 1")
+                .contains("페이지 : [1] / 2");
+
     }
 
     @Test
@@ -275,6 +274,28 @@ public class WiseSayingControllerTest {
                 .contains("4 / 작자미상 4 / 명언 4")
                 .contains("3 / 작자미상 3 / 명언 3")
                 .contains("2 / 작자미상 2 / 명언 2")
-                .contains("1 / 작자미상 1 / 명언 1");
+                .contains("1 / 작자미상 1 / 명언 1")
+                .contains("페이지 : 1 / [2]");
+    }
+
+    @Test
+    @DisplayName("목록?keyword=명언 1")
+    void t15() {
+        String rs = AppTestRunner.run(
+                makeSampleDataCommand() + "\n목록?keyword=명언 1"
+        );
+
+        assertThat(rs)
+                .contains("10 / 작자미상 10 / 명언 10")
+                .doesNotContain("9 / 작자미상 9 / 명언 9")
+                .doesNotContain("8 / 작자미상 8 / 명언 8")
+                .doesNotContain("7 / 작자미상 7 / 명언 7")
+                .doesNotContain("6 / 작자미상 6 / 명언 6")
+                .doesNotContain("5 / 작자미상 5 / 명언 5")
+                .doesNotContain("4 / 작자미상 4 / 명언 4")
+                .doesNotContain("3 / 작자미상 3 / 명언 3")
+                .doesNotContain("2 / 작자미상 2 / 명언 2")
+                .contains("1 / 작자미상 1 / 명언 1")
+                .contains("페이지 : [1]");
     }
 }
